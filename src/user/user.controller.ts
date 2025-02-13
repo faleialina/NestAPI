@@ -7,20 +7,20 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { AppService } from './app.service';
+import { UserService } from './user.service';
 
 interface iUser {
-  name: string;
-  description: string;
+  username: string;
+  email: string;
+  password: string;
 }
 
 interface iUserWithId extends iUser {
   id: number;
 }
-
-@Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+@Controller('/user')
+export class UserController {
+  constructor(private readonly appService: UserService) {}
 
   @Get()
   getAllItem(): iUserWithId[] | string {
