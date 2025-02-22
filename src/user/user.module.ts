@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
+import { check } from 'src/middelwares';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
@@ -7,4 +8,9 @@ import { UserService } from './user.service';
   controllers: [UserController],
   providers: [UserService],
 })
-export class UserModule {}
+export class UserModule {
+  configure(test: MiddlewareConsumer) {
+    test.apply(check).forRoutes(UserController);
+    test.apply(check).forRoutes({ path: '/user', method: RequestMethod.GET });
+  }
+}
